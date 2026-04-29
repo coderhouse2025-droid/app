@@ -660,6 +660,21 @@ function exportPDF() {
     const red600   = [220, 38, 38];
 
     const pw = doc.internal.pageSize.getWidth();
+  // ── LOGO REAL (BRANDING) ─────────────────────────────
+const imgData = await fetch('icon-192.png')
+  .then(res => res.blob())
+  .then(blob => new Promise(resolve => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.readAsDataURL(blob);
+  }));
+
+// Fondo del logo (igual que app)
+doc.setFillColor(...darkBg);
+doc.roundedRect(10, 6, 26, 26, 4, 4, 'F');
+
+// Logo encima
+doc.addImage(imgData, 'PNG', 12, 8, 22, 22);
 
     // ── Header bar ──────────────────────────────────────────
     doc.setFillColor(...darkBg);
@@ -693,12 +708,12 @@ function exportPDF() {
     doc.setTextColor(...white);
     doc.setFontSize(18);
     doc.setFont('helvetica', 'bold');
-    doc.text('GastoApp Pro', 46, 20);
+    doc.text('GastoApp Pro', 42, 20);
 
     doc.setFontSize(7);
     doc.setFont('helvetica', 'normal');
     doc.setTextColor(148, 163, 184);
-    doc.text('CONTROL DE PRESUPUESTO', 46, 27);
+    doc.text('CONTROL DE PRESUPUESTO', 42, 27);
 
     // Period label (right side)
     doc.setFontSize(10);
